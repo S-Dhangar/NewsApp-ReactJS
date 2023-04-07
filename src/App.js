@@ -1,25 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Navbar from './Navbar'; // Import your Navbar component
+import News from './News'; // Import your News component or replace it with your actual News component
+import LoadingBar from 'react-top-loading-bar'
 
-function App() {
+export default class App extends Component{
+  state={
+    progress:0
+  }
+  setProgress=(progress)=>{
+    this.setState({progress:progress})
+  }
+  render(){
+
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Navbar /> {/* Navbar component outside of the Routes */}
+      <LoadingBar
+        color='#f11946'
+        progress={this.state.progress}
+      />
+      <Routes>
+        <Route path='/' element={<News setProgress={this.setProgress} category="general"/>} />
+        <Route path='/technology' element={<News setProgress={this.setProgress} category="technology"/>} />
+        <Route path='/business' element={<News setProgress={this.setProgress} category="business"/>} />
+        <Route path='/entertainment' element={<News setProgress={this.setProgress} category="entertainment"/>} />
+        <Route path='/general' element={<News setProgress={this.setProgress} category="general"/>} />
+        <Route path='/health' element={<News setProgress={this.setProgress} category="health"/>} />
+        <Route path='/science' element={<News setProgress={this.setProgress} category="science"/>} />
+        <Route path='/sports' element={<News setProgress={this.setProgress} category="sports"/>} />
+      </Routes>
+    </Router>
   );
-}
+  }
+};
 
-export default App;
